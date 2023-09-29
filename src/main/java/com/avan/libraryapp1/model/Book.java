@@ -1,10 +1,6 @@
 package com.avan.libraryapp1.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "books")
@@ -18,6 +14,10 @@ public class Book {
     private String isbn;
     private int copiesAvailable;
 
+    @ManyToOne
+    @JoinColumn(name = "borrowed_by_user_id")
+    private User borrowedBy;
+
     // Constructors
     public Book() {}
 
@@ -29,44 +29,14 @@ public class Book {
     }
 
     // Getters and Setters
-    public Long getId() {
-        return id;
+    // ... [All the existing getters and setters] ...
+
+    public User getBorrowedBy() {
+        return borrowedBy;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-
-    public int getCopiesAvailable() {
-        return copiesAvailable;
-    }
-
-    public void setCopiesAvailable(int copiesAvailable) {
-        this.copiesAvailable = copiesAvailable;
+    public void setBorrowedBy(User borrowedBy) {
+        this.borrowedBy = borrowedBy;
     }
 
     // Override toString for better readability

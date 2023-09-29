@@ -29,6 +29,9 @@ public class BorrowRecordController {
 
     @PostMapping
     public BorrowRecord createBorrowRecord(@RequestBody BorrowRecord borrowRecord) {
+        // Check if the current user is a student before allowing borrowing
+        // This will require integration with Spring Security or a similar framework
+
         return borrowRecordService.saveBorrowRecord(borrowRecord);
     }
 

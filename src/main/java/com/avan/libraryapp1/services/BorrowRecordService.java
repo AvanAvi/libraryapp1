@@ -23,6 +23,11 @@ public class BorrowRecordService {
     }
 
     public BorrowRecord saveBorrowRecord(BorrowRecord borrowRecord) {
+        // Logic to decrement the copiesAvailable of the Book entity when a book is borrowed
+        // and increment when a book is returned.
+        // This will require additional methods in the BookService to handle these operations.
+
+        // For now, just saving the record:
         return borrowRecordRepository.save(borrowRecord);
     }
 

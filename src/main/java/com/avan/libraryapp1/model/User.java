@@ -16,14 +16,15 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String role;  // New attribute
 
-    // Constructors
     public User() {}
 
-    public User(String firstName, String lastName, String email) {
+    public User(String firstName, String lastName, String email, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.role = role;
     }
 
     // Getters and Setters
@@ -59,9 +60,16 @@ public class User {
         this.email = email;
     }
 
-    // Override toString for better readability
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", role=" + role + "]";
     }
 }

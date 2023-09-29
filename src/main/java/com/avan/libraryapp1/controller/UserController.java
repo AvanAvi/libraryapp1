@@ -27,6 +27,11 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/role/{role}")
+    public List<User> getUsersByRole(@PathVariable String role) {
+        return userService.getUsersByRole(role);
+    }
+
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userService.saveUser(user);
@@ -39,6 +44,7 @@ public class UserController {
                     existingUser.setFirstName(updatedUser.getFirstName());
                     existingUser.setLastName(updatedUser.getLastName());
                     existingUser.setEmail(updatedUser.getEmail());
+                    existingUser.setRole(updatedUser.getRole());
                     return ResponseEntity.ok().body(userService.saveUser(existingUser));
                 })
                 .orElse(ResponseEntity.notFound().build());

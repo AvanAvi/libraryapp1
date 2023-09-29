@@ -1,10 +1,6 @@
 package com.avan.libraryapp1.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -14,21 +10,26 @@ public class BorrowRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
-    private Long bookId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
+
     private Date borrowDate;
     private Date returnDate;
 
-    // Constructors
     public BorrowRecord() {}
 
-    public BorrowRecord(Long userId, Long bookId, Date borrowDate) {
-        this.userId = userId;
-        this.bookId = bookId;
+    public BorrowRecord(User user, Book book, Date borrowDate) {
+        this.user = user;
+        this.book = book;
         this.borrowDate = borrowDate;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -37,20 +38,20 @@ public class BorrowRecord {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getBookId() {
-        return bookId;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public Date getBorrowDate() {
@@ -69,9 +70,8 @@ public class BorrowRecord {
         this.returnDate = returnDate;
     }
 
-    // Override toString for better readability
     @Override
     public String toString() {
-        return "BorrowRecord [id=" + id + ", userId=" + userId + ", bookId=" + bookId + ", borrowDate=" + borrowDate + ", returnDate=" + returnDate + "]";
+        return "BorrowRecord [id=" + id + ", user=" + user + ", book=" + book + ", borrowDate=" + borrowDate + ", returnDate=" + returnDate + "]";
     }
 }

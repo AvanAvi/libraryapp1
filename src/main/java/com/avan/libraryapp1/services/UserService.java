@@ -22,6 +22,10 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public List<User> getUsersByRole(String role) {
+        return userRepository.findByRole(role);
+    }
+
     public User saveUser(User user) {
         return userRepository.save(user);
     }

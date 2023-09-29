@@ -1,6 +1,7 @@
 package com.avan.libraryapp1.services;
 
 import com.avan.libraryapp1.model.Book;
+import com.avan.libraryapp1.model.User;
 import com.avan.libraryapp1.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,17 @@ public class BookService {
 
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    public Book borrowBook(Long bookId, User student) {
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        book.setBorrowedBy(student);
+        return bookRepository.save(book);
+    }
+
+    public Book returnBook(Long bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        book.setBorrowedBy(null);
+        return bookRepository.save(book);
     }
 }

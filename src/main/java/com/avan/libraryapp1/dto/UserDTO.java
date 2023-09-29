@@ -7,8 +7,7 @@ public class UserDTO {
     private String lastName;
     private String email;
     private String phoneNumber;
-
-    // Standard getters and setters
+    private String role;  // New attribute
 
     public Long getId() {
         return id;
@@ -48,5 +47,13 @@ public class UserDTO {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
