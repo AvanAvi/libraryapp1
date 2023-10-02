@@ -7,6 +7,7 @@
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/services/BorrowRecordService.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/exceptions/BookNotFoundException.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/dto/UserDTO.java
+/Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/security/SecurityConfig.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/model/Book.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/services/BookService.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/dto/BookDTO.java
@@ -14,8 +15,10 @@
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/exceptions/BorrowRecordNotFoundException.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/model/BorrowRecord.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/repository/BorrowRecordRepository.java
+/Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/security/CustomUserDetails.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/controller/BorrowRecordController.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/services/UserService.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/exceptions/UserNotFoundException.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/exceptions/ErrorResponse.java
+/Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/security/CustomUserDetailsService.java
 /Users/apple/eclipse-workspace/libraryapp1/src/main/java/com/avan/libraryapp1/exceptions/GlobalExceptionHandler.java
