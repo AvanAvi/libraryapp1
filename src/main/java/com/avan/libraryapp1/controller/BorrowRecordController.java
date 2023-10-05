@@ -4,6 +4,7 @@ import com.avan.libraryapp1.model.BorrowRecord;
 import com.avan.libraryapp1.services.BorrowRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,22 +18,21 @@ public class BorrowRecordController {
 
     @GetMapping
     public List<BorrowRecord> getAllBorrowRecords() {
+       
         return borrowRecordService.getAllBorrowRecords();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BorrowRecord> getBorrowRecordById(@PathVariable Long id) {
         return borrowRecordService.getBorrowRecordById(id)
-                .map(record -> ResponseEntity.ok().body(record))
+                .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public BorrowRecord createBorrowRecord(@RequestBody BorrowRecord borrowRecord) {
-        // Check if the current user is a student before allowing borrowing
-        // This will require integration with Spring Security or a similar framework
-
-        return borrowRecordService.saveBorrowRecord(borrowRecord);
+    public ResponseEntity<BorrowRecord> createBorrowRecord(@RequestBody BorrowRecord borrowRecord) {
+     
+        return new ResponseEntity<>(borrowRecordService.saveBorrowRecord(borrowRecord), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -40,7 +40,7 @@ public class BorrowRecordController {
         return borrowRecordService.getBorrowRecordById(id)
                 .map(existingRecord -> {
                     borrowRecord.setId(id);
-                    return ResponseEntity.ok().body(borrowRecordService.saveBorrowRecord(borrowRecord));
+                    return ResponseEntity.ok(borrowRecordService.saveBorrowRecord(borrowRecord));
                 })
                 .orElse(ResponseEntity.notFound().build());
     }

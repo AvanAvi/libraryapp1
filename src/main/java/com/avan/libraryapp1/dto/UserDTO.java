@@ -1,13 +1,28 @@
 package com.avan.libraryapp1.dto;
 
+import javax.validation.constraints.*;
+
 public class UserDTO {
 
     private Long id;
+
+    @NotBlank(message = "First name cannot be blank")
     private String firstName;
+
+    @NotBlank(message = "Last name cannot be blank")
     private String lastName;
+
+    @Email(message = "Email should be valid")
     private String email;
+
+    @NotBlank(message = "Phone number cannot be blank")
+    @Pattern(regexp = "\\d+", message = "Phone number should contain only digits")
     private String phoneNumber;
-    private String role;  // New attribute
+
+    @NotBlank(message = "Role cannot be blank")
+    private String role;
+
+    // Standard getters and setters
 
     public Long getId() {
         return id;

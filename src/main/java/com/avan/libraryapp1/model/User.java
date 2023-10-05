@@ -1,86 +1,96 @@
 package com.avan.libraryapp1.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "users")
 public class User {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  private String firstName;
-  private String lastName;
-  private String email;
-  private String role;
-  
-  private String password; // Added password field
+    @NotBlank(message = "First name cannot be blank")
+    private String firstName;
 
-  public User() {}
+    @NotBlank(message = "Last name cannot be blank")
+    private String lastName;
 
-  public User(String firstName, String lastName, String email, String role, String password) {
-    this.firstName = firstName;
-    this.lastName = lastName; 
-    this.email = email;
-    this.role = role;
-    this.password = password; // Set password
-  }
+    @Email(message = "Please provide a valid email address")
+    @NotBlank(message = "Email cannot be blank")
+    private String email;
 
-  // Getters and Setters
-  
-  public Long getId() {
-    return id;
-  }
+    @NotBlank(message = "Role cannot be blank")
+    private String role;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    @NotBlank(message = "Password cannot be blank")
+    private String password;
 
-  public String getFirstName() {
-    return firstName;
-  }
+    public User() {}
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    public User(String firstName, String lastName, String email, String role, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public String getRole() {
-    return role;
-  }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-  public void setRole(String role) {
-    this.role = role;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
-  
-  // toString
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    // toString
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", role=" + role + "]";
+    }
 }

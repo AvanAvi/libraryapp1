@@ -16,30 +16,69 @@ public class BookService {
     private BookRepository bookRepository;
 
     public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+        try {
+            return bookRepository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve books: " + e.getMessage());
+        }
     }
 
     public Optional<Book> getBookById(Long id) {
-        return bookRepository.findById(id);
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid book ID.");
+        }
+        try {
+            return bookRepository.findById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve book: " + e.getMessage());
+        }
     }
 
     public Book saveBook(Book book) {
-        return bookRepository.save(book);
+        // Validate book details here if needed
+        try {
+            return bookRepository.save(book);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save book: " + e.getMessage());
+        }
     }
 
     public void deleteBook(Long id) {
-        bookRepository.deleteById(id);
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid book ID.");
+        }
+        try {
+            bookRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete book: " + e.getMessage());
+        }
     }
 
     public Book borrowBook(Long bookId, User student) {
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
-        book.setBorrowedBy(student);
-        return bookRepository.save(book);
+        if (bookId == null || bookId <= 0 || student == null) {
+            throw new IllegalArgumentException("Invalid book ID or student.");
+        }
+        try {
+            Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+            book.setBorrowedBy(student);
+            book.setCopiesAvailable(book.getCopiesAvailable() - 1); // Decrement available copies
+            return bookRepository.save(book);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to borrow book: " + e.getMessage());
+        }
     }
 
     public Book returnBook(Long bookId) {
-        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
-        book.setBorrowedBy(null);
-        return bookRepository.save(book);
+        if (bookId == null || bookId <= 0) {
+            throw new IllegalArgumentException("Invalid book ID.");
+        }
+        try {
+            Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+            book.setBorrowedBy(null);
+            book.setCopiesAvailable(book.getCopiesAvailable() + 1); // Increment available copies
+            return bookRepository.save(book);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to return book: " + e.getMessage());
+        }
     }
 }

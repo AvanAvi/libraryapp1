@@ -15,23 +15,41 @@ public class BorrowRecordService {
     private BorrowRecordRepository borrowRecordRepository;
 
     public List<BorrowRecord> getAllBorrowRecords() {
-        return borrowRecordRepository.findAll();
+        try {
+            return borrowRecordRepository.findAll();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve borrow records: " + e.getMessage());
+        }
     }
 
     public Optional<BorrowRecord> getBorrowRecordById(Long id) {
-        return borrowRecordRepository.findById(id);
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid borrow record ID.");
+        }
+        try {
+            return borrowRecordRepository.findById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to retrieve borrow record: " + e.getMessage());
+        }
     }
 
     public BorrowRecord saveBorrowRecord(BorrowRecord borrowRecord) {
-        // Logic to decrement the copiesAvailable of the Book entity when a book is borrowed
-        // and increment when a book is returned.
-        // This will require additional methods in the BookService to handle these operations.
-
-        // For now, just saving the record:
-        return borrowRecordRepository.save(borrowRecord);
+        // Validate borrowRecord details here if needed
+        try {
+            return borrowRecordRepository.save(borrowRecord);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to save borrow record: " + e.getMessage());
+        }
     }
 
     public void deleteBorrowRecord(Long id) {
-        borrowRecordRepository.deleteById(id);
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Invalid borrow record ID.");
+        }
+        try {
+            borrowRecordRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete borrow record: " + e.getMessage());
+        }
     }
 }

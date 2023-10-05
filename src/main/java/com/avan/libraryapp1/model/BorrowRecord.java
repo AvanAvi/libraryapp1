@@ -1,6 +1,7 @@
 package com.avan.libraryapp1.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -19,7 +20,9 @@ public class BorrowRecord {
     @JoinColumn(name = "book_id")
     private Book book;
 
+    @NotNull(message = "Borrow date cannot be null")
     private Date borrowDate;
+
     private Date returnDate;
 
     public BorrowRecord() {}
@@ -30,6 +33,7 @@ public class BorrowRecord {
         this.borrowDate = borrowDate;
     }
 
+ 
     public Long getId() {
         return id;
     }
