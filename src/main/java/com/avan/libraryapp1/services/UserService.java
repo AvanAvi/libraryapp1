@@ -4,6 +4,7 @@ import com.avan.libraryapp1.model.User;
 import com.avan.libraryapp1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +44,8 @@ public class UserService {
             throw new RuntimeException("Failed to retrieve users by role: " + e.getMessage());
         }
     }
-
+    
+    @Transactional
     public User saveUser(User user) {
         // Validate user details here if needed
         try {
@@ -52,7 +54,7 @@ public class UserService {
             throw new RuntimeException("Failed to save user: " + e.getMessage());
         }
     }
-
+    @Transactional
     public void deleteUser(Long id) {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("Invalid user ID.");

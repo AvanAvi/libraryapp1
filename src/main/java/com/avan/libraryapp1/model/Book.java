@@ -28,16 +28,8 @@ public class Book {
     @JoinColumn(name = "borrowed_by_user_id")
     private User borrowedBy;
 
-    public Book() {}
+    // Standard getters and setters
 
-    public Book(String title, String author, String isbn, int copiesAvailable) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.copiesAvailable = copiesAvailable;
-    }
-
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -84,11 +76,5 @@ public class Book {
 
     public void setBorrowedBy(User borrowedBy) {
         this.borrowedBy = borrowedBy;
-    }
-
-    // Override toString for better readability
-    @Override
-    public String toString() {
-        return "Book [id=" + id + ", title=" + title + ", author=" + author + ", isbn=" + isbn + ", copiesAvailable=" + copiesAvailable + "]";
     }
 }

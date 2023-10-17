@@ -5,6 +5,7 @@ import com.avan.libraryapp1.model.User;
 import com.avan.libraryapp1.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +54,7 @@ public class BookService {
             throw new RuntimeException("Failed to delete book: " + e.getMessage());
         }
     }
-
+    @Transactional
     public Book borrowBook(Long bookId, User student) {
         if (bookId == null || bookId <= 0 || student == null) {
             throw new IllegalArgumentException("Invalid book ID or student.");
@@ -67,7 +68,7 @@ public class BookService {
             throw new RuntimeException("Failed to borrow book: " + e.getMessage());
         }
     }
-
+    @Transactional
     public Book returnBook(Long bookId) {
         if (bookId == null || bookId <= 0) {
             throw new IllegalArgumentException("Invalid book ID.");

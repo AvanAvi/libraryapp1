@@ -13,7 +13,6 @@ public class BookDTO {
     private String author;
 
     @NotBlank(message = "ISBN cannot be blank")
-    @Size(min = 10, max = 13, message = "ISBN should be between 10 and 13 characters")
     private String isbn;
 
     @Min(value = 1500, message = "Year should not be less than 1500")
@@ -23,7 +22,6 @@ public class BookDTO {
     @PositiveOrZero(message = "Copies available should be zero or positive number")
     private Integer copiesAvailable;
 
-   
     // Standard getters and setters
 
     public Long getId() {

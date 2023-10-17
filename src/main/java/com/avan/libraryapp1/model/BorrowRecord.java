@@ -1,39 +1,35 @@
 package com.avan.libraryapp1.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
 @Entity
-@Table(name = "borrow_records")
 public class BorrowRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @NotNull(message = "User ID cannot be null")
+    private Long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
+    @NotNull(message = "Book ID cannot be null")
+    private Long bookId;
 
     @NotNull(message = "Borrow date cannot be null")
+    @PastOrPresent(message = "Borrow date should be in the past or present")
     private Date borrowDate;
 
+    @PastOrPresent(message = "Return date should be in the past or present")
     private Date returnDate;
 
-    public BorrowRecord() {}
+    // Standard getters and setters
 
-    public BorrowRecord(User user, Book book, Date borrowDate) {
-        this.user = user;
-        this.book = book;
-        this.borrowDate = borrowDate;
-    }
-
- 
     public Long getId() {
         return id;
     }
@@ -42,20 +38,20 @@ public class BorrowRecord {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Book getBook() {
-        return book;
+    public Long getBookId() {
+        return bookId;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
     }
 
     public Date getBorrowDate() {
@@ -72,10 +68,5 @@ public class BorrowRecord {
 
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
-    }
-
-    @Override
-    public String toString() {
-        return "BorrowRecord [id=" + id + ", user=" + user + ", book=" + book + ", borrowDate=" + borrowDate + ", returnDate=" + returnDate + "]";
     }
 }

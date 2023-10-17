@@ -28,18 +28,16 @@ public class User {
     @NotBlank(message = "Password cannot be blank")
     private String password;
 
-    public User() {}
+    // Getters and Setters
+    // ...
 
-    public User(String firstName, String lastName, String email, String role, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.role = role;
-        this.password = password;
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", role=" + role + "]";
     }
 
+    // Standard getters and setters
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -86,11 +84,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    // toString
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", role=" + role + "]";
     }
 }

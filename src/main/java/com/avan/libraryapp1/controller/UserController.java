@@ -1,13 +1,14 @@
 package com.avan.libraryapp1.controller;
-
+import org.springframework.http.HttpStatus;
+import com.avan.libraryapp1.dto.UserDTO;
 import com.avan.libraryapp1.model.User;
 import com.avan.libraryapp1.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
@@ -17,44 +18,60 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> userDTOs = userService.getAllUsers().stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(userDTOs);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
-                .map(ResponseEntity::ok)
+                .map(user -> ResponseEntity.ok(convertEntityToDto(user)))
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/role/{role}")
-    public ResponseEntity<List<User>> getUsersByRole(@PathVariable String role) {
-        return new ResponseEntity<>(userService.getUsersByRole(role), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        // Validations can be added in future if needed
-        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+        User user = convertDtoToEntity(userDTO);
+        User savedUser = userService.saveUser(user);
+        UserDTO savedUserDTO = convertEntityToDto(savedUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUserDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        return userService.getUserById(id)
-                .map(existingUser -> {
-                    existingUser.setFirstName(updatedUser.getFirstName());
-                    existingUser.setLastName(updatedUser.getLastName());
-                    existingUser.setEmail(updatedUser.getEmail());
-                    existingUser.setRole(updatedUser.getRole());
-                    return new ResponseEntity<>(userService.saveUser(existingUser), HttpStatus.OK);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO updatedUserDTO) {
+        User updatedUser = convertDtoToEntity(updatedUserDTO);
+        updatedUser.setId(id);
+        User savedUser = userService.saveUser(updatedUser);
+        UserDTO savedUserDTO = convertEntityToDto(savedUser);
+        return ResponseEntity.ok(savedUserDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
+    }
+
+    private User convertDtoToEntity(UserDTO userDTO) {
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setEmail(userDTO.getEmail());
+        user.setRole(userDTO.getRole());
+        return user;
+    }
+
+    private UserDTO convertEntityToDto(User user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setRole(user.getRole());
+        return userDTO;
     }
 }

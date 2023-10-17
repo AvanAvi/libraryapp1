@@ -2,28 +2,28 @@ package com.avan.libraryapp1.dto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
+
 import java.util.Date;
 
 public class BorrowRecordDTO {
 
-    private Long id;
+  private Long id;
 
-    @NotNull(message = "User ID cannot be null")
-    private Long userId;
+  @NotNull(message = "User ID cannot be null")
+  private Long userId;
 
-    @NotNull(message = "Book ID cannot be null")
-    private Long bookId;
+  @NotNull(message = "Book ID cannot be null") 
+  private Long bookId;
 
-    @NotNull(message = "Borrow date cannot be null")
-    @PastOrPresent(message = "Borrow date should be in the past or present")
-    private Date borrowDate;
+  @NotNull(message = "Borrow date cannot be null")
+  @PastOrPresent(message = "Borrow date should be in the past or present")
+  private Date borrowDate;
 
-    @PastOrPresent(message = "Return date should be in the past or present")
-    private Date returnDate;
+  @NotNull
+  @PastOrPresent(message = "Return date should be in the past or present")
+  private Date returnDate;
 
-   
-
-    // Standard getters and setters
+  // standard getters and setters
 
     public Long getId() {
         return id;

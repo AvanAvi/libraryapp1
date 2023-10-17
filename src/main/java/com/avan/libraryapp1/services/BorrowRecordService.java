@@ -4,7 +4,7 @@ import com.avan.libraryapp1.model.BorrowRecord;
 import com.avan.libraryapp1.repository.BorrowRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +32,8 @@ public class BorrowRecordService {
             throw new RuntimeException("Failed to retrieve borrow record: " + e.getMessage());
         }
     }
-
+    
+    @Transactional
     public BorrowRecord saveBorrowRecord(BorrowRecord borrowRecord) {
         // Validate borrowRecord details here if needed
         try {
@@ -41,7 +42,8 @@ public class BorrowRecordService {
             throw new RuntimeException("Failed to save borrow record: " + e.getMessage());
         }
     }
-
+    
+    @Transactional
     public void deleteBorrowRecord(Long id) {
         if (id == null || id <= 0) {
             throw new IllegalArgumentException("Invalid borrow record ID.");
