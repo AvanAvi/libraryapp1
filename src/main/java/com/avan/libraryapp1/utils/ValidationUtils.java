@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class ValidationUtils {
+	 private ValidationUtils() {}
 
     /**
      * Validates if the provided object is not null.
