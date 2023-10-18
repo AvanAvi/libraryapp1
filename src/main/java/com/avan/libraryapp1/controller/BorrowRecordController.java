@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/api/borrow-records")
@@ -20,9 +20,10 @@ public class BorrowRecordController {
 
     @GetMapping
     public List<BorrowRecordDTO> getAllBorrowRecords() {
-        return borrowRecordService.getAllBorrowRecords().stream()
-                .map(this::convertEntityToDto)
-                .collect(Collectors.toList());
+      return borrowRecordService.getAllBorrowRecords().stream()
+              .map(this::convertEntityToDto)
+              .toList();
+    
     }
 
     @GetMapping("/{id}")

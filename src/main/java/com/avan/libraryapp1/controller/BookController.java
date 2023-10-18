@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/api/books")
@@ -25,9 +25,9 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<List<BookDTO>> getAllBooks() {
-        List<BookDTO> bookDTOs = bookService.getAllBooks().stream()
-                .map(this::convertEntityToDto)
-                .collect(Collectors.toList());
+    	List<BookDTO> bookDTOs = bookService.getAllBooks().stream()
+    			  .map(this::convertEntityToDto)
+    			  .toList(); 
         return ResponseEntity.ok(bookDTOs);
     }
 
