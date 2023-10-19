@@ -18,6 +18,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    private static final String LOGIN_PAGE_URL = "/login"; // Defining constant
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -33,27 +35,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .csrf().disable()
             .authorizeRequests()
-                .antMatchers("/login", "/register").permitAll()
+                .antMatchers(LOGIN_PAGE_URL, "/register").permitAll() // Using constant
                 .anyRequest().authenticated()
             .and()
             .formLogin()
-                .loginPage("/login")
+                .loginPage(LOGIN_PAGE_URL) // Using constant
                 .defaultSuccessUrl("/home")
                 .permitAll()
             .and()
             .logout()
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl(LOGIN_PAGE_URL) // Using constant
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
             .and()
             .sessionManagement()
-                .invalidSessionUrl("/login")
+                .invalidSessionUrl(LOGIN_PAGE_URL) // Using constant
                 .sessionFixation().migrateSession()
-                .maximumSessions(1).expiredUrl("/login")
+                .maximumSessions(1).expiredUrl(LOGIN_PAGE_URL) // Using constant
                 .and()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .enableSessionUrlRewriting(false)
-                .sessionAuthenticationErrorUrl("/login");
+                .sessionAuthenticationErrorUrl(LOGIN_PAGE_URL); // Using constant
     }
 }
