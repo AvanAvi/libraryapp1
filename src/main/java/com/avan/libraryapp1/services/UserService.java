@@ -5,7 +5,7 @@ import com.avan.libraryapp1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-
+import com.avan.libraryapp1.exceptions.UserNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +19,7 @@ public class UserService {
         try {
             return userRepository.findAll();
         } catch (Exception e) {
-            throw new RuntimeException("Failed to retrieve users: " + e.getMessage());
+            throw new UserNotFoundException("Failed to retrieve users: " + e.getMessage());
         }
     }
 
@@ -30,7 +30,7 @@ public class UserService {
         try {
             return userRepository.findById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to retrieve user: " + e.getMessage());
+            throw new UserNotFoundException("Failed to retrieve user: " + e.getMessage());
         }
     }
 
@@ -41,7 +41,7 @@ public class UserService {
         try {
             return userRepository.findByRole(role);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to retrieve users by role: " + e.getMessage());
+            throw new UserNotFoundException ("Failed to retrieve users by role: " + e.getMessage());
         }
     }
     

@@ -1,12 +1,19 @@
 package com.avan.libraryapp1.exceptions;
 
-/**
- * Exception thrown when a user is not found.
- */
-public class UserNotFoundException extends RuntimeException {
-    private static final long serialVersionUID = 1L;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public UserNotFoundException(Long id) {
-        super(String.format("User with ID %d not found.", id));
-    }
+@ResponseStatus(HttpStatus.NOT_FOUND) 
+public class UserNotFoundException extends RuntimeException {
+
+  private static final long serialVersionUID = 1L;
+
+  public UserNotFoundException(Long id) {
+    super("User not found with id: " + id);
+  }
+
+  public UserNotFoundException(String message) {
+    super(message);
+  }
+
 }
