@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.avan.libraryapp1.unittests.BookServiceTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.844 s <<< FAILURE! - in com.avan.libraryapp1.unittests.BookServiceTests
+testGetAllBooks  Time elapsed: 0.829 s  <<< ERROR!
+java.lang.RuntimeException: Failed to retrieve books: Cannot invoke "com.avan.libraryapp1.repository.BookRepository.findAll()" because "this.bookRepository" is null
+	at com.avan.libraryapp1.unittests.BookServiceTests.testGetAllBooks(BookServiceTests.java:29)
+
