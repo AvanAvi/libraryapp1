@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: com.avan.libraryapp1.unittests.BookServiceTests
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.114 s - in com.avan.libraryapp1.unittests.BookServiceTests
+Tests run: 8, Failures: 1, Errors: 2, Skipped: 0, Time elapsed: 1.192 s <<< FAILURE! - in com.avan.libraryapp1.unittests.BookServiceTests
+testBorrowBook_Success  Time elapsed: 0.022 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.avan.libraryapp1.model.Book.getBorrowedBy()" because "borrowedBook" is null
+	at com.avan.libraryapp1.unittests.BookServiceTests.testBorrowBook_Success(BookServiceTests.java:79)
+
+testReturnBook_Success  Time elapsed: 0.009 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.avan.libraryapp1.model.Book.getBorrowedBy()" because "returnedBook" is null
+	at com.avan.libraryapp1.unittests.BookServiceTests.testReturnBook_Success(BookServiceTests.java:87)
+
+testSaveBook_Success  Time elapsed: 0.006 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <null> but was: <com.avan.libraryapp1.model.Book@6c44052e>
+	at com.avan.libraryapp1.unittests.BookServiceTests.testSaveBook_Success(BookServiceTests.java:63)
+

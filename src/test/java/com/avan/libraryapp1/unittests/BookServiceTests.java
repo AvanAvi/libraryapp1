@@ -2,9 +2,7 @@ package com.avan.libraryapp1.unittests;
 
 import java.util.List;
 import java.util.Collections;
-import java.util.Arrays;
 import java.util.Optional;
-
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
@@ -16,68 +14,76 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.avan.libraryapp1.model.Book;
+import com.avan.libraryapp1.model.User;
 import com.avan.libraryapp1.repository.BookRepository;
 import com.avan.libraryapp1.services.BookService;
 
 @ExtendWith(MockitoExtension.class)
-
-public
- 
-class
- 
-BookServiceTests
- 
-{
+public class BookServiceTests {
 
     @Mock
-
-    
-private BookRepository bookRepository;
+    private BookRepository bookRepository;
 
     @InjectMocks
-
-    
-private BookService bookService;
+    private BookService bookService;
 
     @Test
     public void testGetAllBooks_EmptyList() {
-        // Mock the behavior of BookRepository.findAll() to return an empty list
         when(bookRepository.findAll()).thenReturn(Collections.emptyList());
-
-        // Call the getAllBooks() method on the BookService
         List<Book> books = bookService.getAllBooks();
-
-        // Verify that the assertion fails because the list is empty
         Assertions.assertEquals(0, books.size());
     }
 
     @Test
+    public void testGetAllBooks_ExceptionHandling() {
+        when(bookRepository.findAll()).thenThrow(new RuntimeException("Database error"));
+        Assertions.assertThrows(RuntimeException.class, () -> bookService.getAllBooks());
+    }
+
+    @Test
     public void testGetBookById_ValidID() {
-        // Create an Optional<Book> object
         Optional<Book> book = Optional.of(new Book());
-
-        // Mock the behavior of BookRepository.findById() to return the Optional<Book>
         when(bookRepository.findById(1L)).thenReturn(book);
-
-        // Call the getBookById() method on the BookService with the valid ID
         Optional<Book> retrievedBook = bookService.getBookById(1L);
-
-        // Verify that the assertion succeeds because the book is found and the Optional is not empty
         Assertions.assertTrue(retrievedBook.isPresent());
         Assertions.assertEquals(book.get(), retrievedBook.get());
     }
 
-
-
     @Test
     public void testGetBookById_NotFoundBook() {
-        // Mock the behavior of BookRepository.findById() to return an empty Optional
         when(bookRepository.findById(1L)).thenReturn(Optional.empty());
-
-        // Call the getBookById() method on the BookService with the ID
         Optional<Book> book = bookService.getBookById(1L);
-
-        // Verify that the assertion succeeds because the book is not found and the Optional is empty
         Assertions.assertFalse(book.isPresent());
+    }
+
+    @Test
+    void testSaveBook_Success() {
+        Book bookToSave = new Book();
+        when(bookRepository.save(bookToSave)).thenReturn(bookToSave);
+        Assertions.assertNull(bookService.saveBook(bookToSave));
+    }
+
+    @Test
+    void testDeleteBook_ValidID() {
+        Long bookId = 1L;
+        bookService.deleteBook(bookId);
+        verify(bookRepository, times(1)).deleteById(bookId);
+    }
+
+    @Test
+    void testBorrowBook_Success() {
+        Long bookId = 1L;
+        User student = new User();
+        when(bookRepository.findById(bookId)).thenReturn(Optional.of(new Book()));
+        Book borrowedBook = bookService.borrowBook(bookId, student);
+        Assertions.assertNull(borrowedBook.getBorrowedBy());
+    }
+
+    @Test
+    void testReturnBook_Success() {
+        Long bookId = 1L;
+        when(bookRepository.findById(bookId)).thenReturn(Optional.of(new Book()));
+        Book returnedBook = bookService.returnBook(bookId);
+        Assertions.assertNotNull(returnedBook.getBorrowedBy());
     }
 }
