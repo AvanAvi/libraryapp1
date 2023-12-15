@@ -60,7 +60,8 @@ public class BookServiceTests {
     void testSaveBook_Success() {
         Book bookToSave = new Book();
         when(bookRepository.save(bookToSave)).thenReturn(bookToSave);
-        Assertions.assertNull(bookService.saveBook(bookToSave));
+        Book savedBook = bookService.saveBook(bookToSave);
+        Assertions.assertNotNull(savedBook);
     }
 
     @Test
@@ -74,16 +75,31 @@ public class BookServiceTests {
     void testBorrowBook_Success() {
         Long bookId = 1L;
         User student = new User();
-        when(bookRepository.findById(bookId)).thenReturn(Optional.of(new Book()));
+        Book mockBook = new Book();
+        mockBook.setCopiesAvailable(5); // Setting available copies
+
+        when(bookRepository.findById(bookId)).thenReturn(Optional.of(mockBook));
+        when(bookRepository.save(any(Book.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        
         Book borrowedBook = bookService.borrowBook(bookId, student);
-        Assertions.assertNull(borrowedBook.getBorrowedBy());
+
+        Assertions.assertEquals(student, borrowedBook.getBorrowedBy());
+        Assertions.assertEquals(4, borrowedBook.getCopiesAvailable());
     }
 
     @Test
     void testReturnBook_Success() {
         Long bookId = 1L;
-        when(bookRepository.findById(bookId)).thenReturn(Optional.of(new Book()));
+        Book mockBook = new Book();
+        mockBook.setCopiesAvailable(3);
+        mockBook.setBorrowedBy(new User());
+
+        when(bookRepository.findById(bookId)).thenReturn(Optional.of(mockBook));
+        when(bookRepository.save(any(Book.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        
         Book returnedBook = bookService.returnBook(bookId);
-        Assertions.assertNotNull(returnedBook.getBorrowedBy());
+
+        Assertions.assertNull(returnedBook.getBorrowedBy());
+        Assertions.assertEquals(4, returnedBook.getCopiesAvailable());
     }
 }

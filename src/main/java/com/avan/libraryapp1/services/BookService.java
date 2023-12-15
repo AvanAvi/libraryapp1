@@ -15,7 +15,7 @@ import java.util.Optional;
 public class BookService {
 
   private static final String INVALID_BOOK_ID_ERROR = "Invalid book ID.";
-  
+
   @Autowired
   private BookRepository bookRepository;
 
@@ -31,14 +31,14 @@ public class BookService {
     if (id == null || id <= 0) {
       throw new IllegalArgumentException(INVALID_BOOK_ID_ERROR);
     }
-    
+
     try {
       return bookRepository.findById(id);
     } catch (Exception e) {
       throw new RuntimeException("Failed to retrieve book: " + e.getMessage());
     }
   }
-  
+
   public Book saveBook(Book book) {
     // Validate book details here if needed
     
@@ -53,7 +53,7 @@ public class BookService {
     if (id == null || id <= 0) {
       throw new IllegalArgumentException(INVALID_BOOK_ID_ERROR);
     }
-    
+
     try {
       bookRepository.deleteById(id);  
     } catch (Exception e) {
@@ -66,13 +66,11 @@ public class BookService {
     if (bookId == null || bookId <= 0 || student == null) {
       throw new IllegalArgumentException(INVALID_BOOK_ID_ERROR);
     }
-    
+
     try {
       Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
       book.setBorrowedBy(student);
-      
       book.setCopiesAvailable(book.getCopiesAvailable() - 1); // Decrement available copies
-     
       return bookRepository.save(book);
     } catch (Exception e) {
       throw new RuntimeException("Failed to borrow book: " + e.getMessage());
@@ -84,17 +82,14 @@ public class BookService {
     if (bookId == null || bookId <= 0) {
       throw new IllegalArgumentException(INVALID_BOOK_ID_ERROR); 
     }
-    
+
     try {
       Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
       book.setBorrowedBy(null);
-      
       book.setCopiesAvailable(book.getCopiesAvailable() + 1); // Increment available copies
-    
       return bookRepository.save(book);
     } catch (Exception e) {
       throw new RuntimeException("Failed to return book: " + e.getMessage());
     }
   }
-
 }
