@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.avan.libraryapp1.unittests.BookServiceTests
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 1.451 s <<< FAILURE! - in com.avan.libraryapp1.unittests.BookServiceTests
-testGetBookById_ValidID  Time elapsed: 0.014 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
-	at com.avan.libraryapp1.unittests.BookServiceTests.testGetBookById_ValidID(BookServiceTests.java:70)
-
-testGetBookById_NotFoundBook  Time elapsed: 0.012 s  <<< ERROR!
-java.lang.RuntimeException: Failed to retrieve book: null
-	at com.avan.libraryapp1.unittests.BookServiceTests.testGetBookById_NotFoundBook(BookServiceTests.java:80)
-
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.114 s - in com.avan.libraryapp1.unittests.BookServiceTests
