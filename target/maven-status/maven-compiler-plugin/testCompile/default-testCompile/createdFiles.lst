@@ -1,0 +1,5 @@
+com/avan/libraryapp1/AppTest.class
+com/avan/libraryapp1/integrationtests/BookIntegrationTests.class
+com/avan/libraryapp1/unittests/BorrowRecordServiceTests.class
+com/avan/libraryapp1/unittests/BookServiceTests.class
+com/avan/libraryapp1/integrationtests/BorrowRecordIntegrationTests.class
