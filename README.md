@@ -62,8 +62,6 @@ LMS employs a clean, layered architecture to promote the separation of concerns,
 LMS includes a suite of unit and integration tests ensuring the reliability and functionality of the system. Execute the tests via:
 
 ```
-
-
 mvn test
 ```
 
