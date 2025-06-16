@@ -1,91 +1,152 @@
-# Library Management System (LMS) 📚🔍
+# Library Management System
 
 ![Java Version](https://img.shields.io/badge/java-17-red.svg)
-
 ![Code Size](https://img.shields.io/github/languages/code-size/AvanAvi/libraryapp1)
 ![Issues](https://img.shields.io/github/issues/AvanAvi/libraryapp1)
 ![Forks](https://img.shields.io/github/forks/AvanAvi/libraryapp1)
 ![Stars](https://img.shields.io/github/stars/AvanAvi/libraryapp1)
 
-The Library Management System (LMS) is a comprehensive web application designed to facilitate the efficient management of library resources, including books, users, and loan records. Utilizing a modern technology stack, this system is engineered for scalability, robustness, and a superior user experience, aiming to streamline the operations of libraries.
+A Spring Boot application for managing library operations including books, users, and borrowing records.
 
-## Features 🌟
+## Technical Stack
 
-- **Book Management**: Implement full CRUD operations for library books. Advanced search capabilities enable quick book retrieval by title, author, or ISBN.
-- **User Management**: Comprehensive handling of user profiles, including registration, authentication, and role-based access control.
-- **Borrowing System**: A sophisticated system to track the loaning of books, including due dates, return processing, and overdue notifications.
+- **Java 17**
+- **Spring Boot 2.5.4**
+- **Spring Data JPA**
+- **Spring Security**
+- **PostgreSQL**
+- **Maven**
+- **JUnit & Mockito**
 
-## Technologies 🛠
+## Project Structure
 
-- **Spring Boot**: Simplifies the development of stand-alone, production-grade Spring based Applications.
-- **Hibernate ORM**: Provides a powerful, high-performance object/relational persistence and query service.
-- **PostgreSQL**: Offers an advanced, open-source relational database system.
-- **JUnit & Mockito**: Facilitates effective unit and integration testing.
-- **Maven**: Manages dependencies, builds, and documentation from a central piece of information.
+### Core Packages
 
-## Architecture Overview 🏗
+**Controllers** (`src/main/java/com/avan/libraryapp1/controller/`)
+- `BookController` - Book CRUD operations and borrowing
+- `UserController` - User management
+- `BorrowRecordController` - Borrowing history tracking
 
-LMS employs a clean, layered architecture to promote the separation of concerns, facilitating maintainability and ease of testing. The system's architecture comprises:
+**Services** (`src/main/java/com/avan/libraryapp1/services/`)
+- `BookService` - Business logic for book operations
+- `UserService` - User management logic
+- `BorrowRecordService` - Borrowing workflow management
 
-- **Controller Layer**: Manages HTTP request/response cycles, converting JSON payloads into domain objects and vice versa.
-- **Service Layer**: Encapsulates the business logic, offering services to the controller layer.
-- **Repository Layer**: Directly interacts with the database, utilizing Spring Data JPA for data persistence.
-- **Model Layer**: Represents the application's domain model, including entities and their relationships.
-- **Security Configuration**: Ensures secure access to the application's endpoints through authentication and authorization.
+**Models** (`src/main/java/com/avan/libraryapp1/model/`)
+- `Book` - Book entity with validation
+- `User` - User entity with role-based access
+- `BorrowRecord` - Borrowing transaction records
 
-## Getting Started 🚀
+**Repositories** (`src/main/java/com/avan/libraryapp1/repository/`)
+- Spring Data JPA repositories for data persistence
 
-### Prerequisites
+**Security** (`src/main/java/com/avan/libraryapp1/security/`)
+- Authentication and authorization configuration
+- Custom user details service
 
-- JDK 17 or newer
-- Maven 3.6+
-- PostgreSQL 12+
+**DTOs** (`src/main/java/com/avan/libraryapp1/dto/`)
+- Data transfer objects with validation
 
-### Installation
+**Exception Handling** (`src/main/java/com/avan/libraryapp1/exceptions/`)
+- Global exception handler with custom exceptions
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/AvanAvi/libraryapp1.git
-   ```
-2. Configure the database in `src/main/resources/application.yml` with your PostgreSQL credentials.
-3. Build the application:
-   ```
-   mvn clean install
-   ```
-4. Run the application:
-   ```
-   mvn spring-boot:run
-   ```
+## Key Features
 
-## Testing 🧪
+- Complete CRUD operations for books and users
+- Book borrowing and return system
+- Role-based security authentication
+- RESTful API endpoints
+- Input validation and error handling
+- PostgreSQL database integration
 
-LMS includes a suite of unit and integration tests ensuring the reliability and functionality of the system. Execute the tests via:
+## API Endpoints
 
-```
+### Books
+- `GET /api/books` - List all books
+- `GET /api/books/{id}` - Get book by ID
+- `POST /api/books` - Create new book
+- `PUT /api/books/{id}` - Update book
+- `DELETE /api/books/{id}` - Delete book
+- `POST /api/books/{bookId}/borrow/{userId}` - Borrow book
+- `POST /api/books/{bookId}/return` - Return book
+
+### Users
+- `GET /api/users` - List all users
+- `GET /api/users/{id}` - Get user by ID
+- `POST /api/users` - Create new user
+- `PUT /api/users/{id}` - Update user
+- `DELETE /api/users/{id}` - Delete user
+
+### Borrow Records
+- `GET /api/borrow-records` - List all borrow records
+- `GET /api/borrow-records/{id}` - Get borrow record by ID
+- `POST /api/borrow-records` - Create borrow record
+- `PUT /api/borrow-records/{id}` - Update borrow record
+- `DELETE /api/borrow-records/{id}` - Delete borrow record
+
+## Testing
+
+The project includes comprehensive unit tests using JUnit and Mockito.
+
+**Test Structure:**
+- Unit tests: `src/test/java/com/avan/libraryapp1/unittests/`
+- Integration tests: `src/test/java/com/avan/libraryapp1/integrationtests/`
+
+**Run tests:**
+```bash
 mvn test
 ```
 
-## Development Methodologies 🔄 (I'm ranting here 🗣️) 
+**Current test coverage includes:**
+- BookService unit tests with mocking
+- Application context loading tests
+- Exception handling validation
 
+## Setup and Installation
 
+### Prerequisites
+- Java 17 or higher
+- Maven 3.6+
+- PostgreSQL 12+
 
+### Database Configuration
+Update `src/main/resources/application.yml`:
+```yaml
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/LibraryManagement
+    username: your_username
+    password: your_password
+```
 
+### Build and Run
+```bash
+# Clone repository
+git clone [repository-url]
 
-TDD? Nah, a straight-up time-suck. 🙅‍♂️ Planning and testing every single line before coding? Kills spontaneity faster than a bad stand-up routine. 💀
+# Build application
+mvn clean install
 
-TDD is like those obnoxious road trip planners, mapping out every rest stop and playlist. 🧭🚗 News flash: sometimes winging it is better. That's trunk-driven development's charm. 🌳
+# Run application
+mvn spring-boot:run
+```
 
-With trunk-based dev, the main branch is sacred—only the finest code allowed. 💎 It's the VIP section; code reviews are the strict bouncers. 🚪👮‍♂️
+The application will start on `http://localhost:8080`
 
-But trunk-driven dev's real perk? Freedom to explore, experiment, even controlled mistakes—without wrecking the project. 🔥💣 Coding with a safety net. 🤸‍♂️
+## Security
 
-Ditch TDD's needless validation. 🗑️ Blasphemy? Maybe, but who cares? 😈 Trunk-driven dev is streamlined, adrenaline-pumping, no hand-holding required for kickass code delivery. 🚀💯
+- Form-based authentication
+- BCrypt password encoding
+- Role-based access control
+- Session management with CSRF protection
 
-Time to leave outdated methodologies behind. 💨 We're coding fast and furious from now on. 🏎️💨
+## Development Philosophy
 
+I've deliberately chosen trunk-based development over TDD for this project. While I respect TDD's place in enterprise environments and have extensive experience with it, **I find compiler-driven development more efficient for rapid iteration**. My preference is trunk-based workflow with rigorous code reviews as quality gates rather than extensive upfront test coverage. **This approach delivers working software faster** while maintaining quality through systematic review processes. I adapt to team methodologies as needed, but this represents my preferred development philosophy.
 
-### A Measured Perspective 🧘‍♀️
-While I fully acknowledge the benefits of **Test-Driven Development (TDD)**—its role in fostering tightly-coupled, secure software systems, and its esteemed position within numerous enterprises and top-tier firms—I must candidly share my personal stance. After diligently practicing TDD, gaining proficiency and even a natural fluency over time, I've come to a simple, personal conclusion: **it's just not my preference**. I find both **trunk-driven and compiler-driven development methodologies** to be more aligned with my understanding of modern, agile software practices—**quicker, more adaptable**, and, in my view, **more suited to the rapid pace of current development cycles**. This reflection is not a dismissal of TDD's value or a refusal to engage with it professionally. Instead, it's a transparent expression of my critical assessment of different methodologies.
+## Database Schema
 
-***To potential recruiters reviewing this README: please see this as an honest disclosure of my development philosophy, **not as a limitation** in my ability to adapt and thrive within diverse technical environments.***
-
+The application uses JPA with automatic DDL generation. Tables are created automatically on startup:
+- `books` - Book information and availability
+- `users` - User accounts and roles
+- `borrow_record` - Borrowing transaction history
